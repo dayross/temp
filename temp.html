@@ -10,6 +10,8 @@
 var accessToken = "6da2407cd08c7566cb3d6777990c3f45d50e761e";
 var deviceID = "e00fce6849f0c8bf1892a5a1"
 var url = "https://api.particle.io/v1/devices/" + deviceID + "/gradosC";
+var url1 = "https://api.particle.io/v1/devices/" + deviceID + "/gradosF";
+var url2 = "https://api.particle.io/v1/devices/" + deviceID + "/humedad";
 function callback(data, status){
 	if (status == "success") {
 		temp = parseFloat(data.result);
@@ -21,24 +23,73 @@ function callback(data, status){
 		alert("There was a problem");
 	}
 }
+function callback1(data, status) {
+	if (status == "success") {
+		temp = parseFloat(data.result);
+		temp = temp.toFixed(2);
+		g2.refresh(temp); // Actualiza la segunda gráfica
+		setTimeout(getReading1, 1000);
+	}
+	else {
+		alert("Hubo un problema");
+	}
+}
+function callback2(data, status) {
+	if (status == "success") {
+		temp = parseFloat(data.result);
+		temp = temp.toFixed(2);
+		g3.refresh(temp); // Actualiza la tercera gráfica
+		setTimeout(getReading2, 1000);
+	}
+	else {
+		alert("Hubo un problema");
+	}
+}
 function getReading(){
    	$.get(url, {access_token: accessToken}, callback);
+}
+function getReading1() {
+	$.get(url1, {access_token: accessToken}, callback1);
+}
+function getReading2() {
+	$.get(url2, {access_token: accessToken}, callback2);
 }
 </script>
 </head>	
 
 <body>
-<div id="gauge" class="200x160px"></div>
-
+<div id="gauge1" class="200x160px"></div>
+<div id="gauge2" class="200x160px"></div>
+<div id="gauge3" class="200x160px"></div>
 <script>
 var g = new JustGage({
-    id: "gauge",
+    id: "gauge1",
     value: 0,
     min: 0,
     max: 400,
     title: "Temperatura (C)"
 });
 getReading();
+</script>
+<script>
+var g = new JustGage({
+    id: "gauge2",
+    value: 0,
+    min: 0,
+    max: 400,
+    title: "Temperatura (F)"
+});
+getReading1();
+</script>
+<script>
+var g = new JustGage({
+    id: "gauge3",
+    value: 0,
+    min: 0,
+    max: 400,
+    title: "Humedad (%)"
+});
+getReading2();
 </script>
 
 </body>
