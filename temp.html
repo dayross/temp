@@ -8,17 +8,16 @@
 		var deviceID = "e00fce6849f0c8bf1892a5a1"
 		var url = "https://api.particle.io/v1/devices/" + deviceID + "/led";
 
-		function switchOn() {
-	      $.post(url, { params: "on", access_token: accessToken })
+		function switchFun() {
+		if (response.return_value === 1) {
+	      	$.post(url, { params: "on", access_token: accessToken })
 	        .done(function(response) {
-	          if (response.return_value === 1) {
 	            // Encendido
 	            alert("Foco encendido");
 	          }
 	        });
-	    }
-		function switchOff() {
-	      $.post(url, { params: "off", access_token: accessToken })
+	    } else if (response.return_value === 0){
+			$.post(url, { params: "off", access_token: accessToken })
 	        .done(function(response) {
 	          if (response.return_value === 0) {
 	            // Apagado
@@ -26,6 +25,8 @@
 	          }
 	        });
 	    }
+			
+	      
 
 	</script>
 </head>
@@ -34,8 +35,8 @@
 
 	<h1>On/Off Control</h1>
 
-	<input type="button" onClick="switchOn()" value="ON" />
-	<input type="button" onClick="switchOff()" value="OFF" />
+	<input type="button" onClick="switchFun()" value="ON" />
+	<input type="button" onClick="switchFun()" value="OFF" />
 
 </body>
 
