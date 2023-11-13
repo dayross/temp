@@ -11,18 +11,13 @@
 		function switchFun() {
 		if (response.return_value === 1) {
 	      	$.post(url, { params: "on", access_token: accessToken })
-	        .done(function(response) {
-	            // Encendido
 	            alert("Foco encendido");
-	          }
+	          
 	        });
 	    } else if (response.return_value === 0){
 			$.post(url, { params: "off", access_token: accessToken })
-	        .done(function(response) {
-	          if (response.return_value === 0) {
-	            // Apagado
 	            alert("Foco apagado!");
-	          }
+	          
 	        });
 	    }
 			
