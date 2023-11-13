@@ -9,12 +9,33 @@
 		var url = "https://api.particle.io/v1/devices/" + deviceID + "/led";
 
 		function switchOn() {
-			$.post(url, { params: "on", access_token: accessToken });
-		}
+	      $.post(url, { params: "on", access_token: accessToken })
+	        .done(function(response) {
+	          if (response.return_value === 1) {
+	            // Encendido
+	            alert("Foco encendido!");
+	          }
+	        });
+	    }
+		function switchOn() {
+	      $.post(url, { params: "on", access_token: accessToken })
+	        .done(function(response) {
+	          if (response.return_value === 1) {
+	            // Apagado
+	            alert("Foco apagado!");
+	          }
+	        });
+	    }
 
-		function switchOff() {
-			$.post(url, { params: "off", access_token: accessToken });
-		}
+    function switchOff() {
+      $.post(url, { params: "off", access_token: accessToken })
+        .done(function(response) {
+          if (response.return_value === 0) {
+            // Cambiar la imagen a foco apagado
+            $("#focoImagen").attr("src", "apagado.jpg");
+          }
+        });
+    }
 
 	</script>
 </head>
