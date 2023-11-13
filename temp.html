@@ -11,7 +11,7 @@
 		function switchOn() {
 	      $.post(url, { params: "on", access_token: accessToken })
 	        .done(function(response) {
-	          if (response.return_value === 0) {
+	          if (response.return_value === 1) {
 	            // Encendido
 	            alert("Foco encendido");
 	          }
@@ -20,7 +20,7 @@
 		function switchOff() {
 	      $.post(url, { params: "off", access_token: accessToken })
 	        .done(function(response) {
-	          if (response.return_value === 1) {
+	          if (response.return_value === 0) {
 	            // Apagado
 	            alert("Foco apagado!");
 	          }
