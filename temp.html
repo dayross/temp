@@ -17,10 +17,10 @@
 	          }
 	        });
 	    }
-		function switchOn() {
+		function switchOff() {
 	      $.post(url, { params: "on", access_token: accessToken })
 	        .done(function(response) {
-	          if (response.return_value === 1) {
+	          if (response.return_value === 0) {
 	            // Apagado
 	            alert("Foco apagado!");
 	          }
