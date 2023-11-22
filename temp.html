@@ -32,14 +32,14 @@
 
     var accessToken = "6da2407cd08c7566cb3d6777990c3f45d50e761e";
     var deviceID = "e00fce6849f0c8bf1892a5a1";
-    var url = "https://api.particle.io/v1/devices/" + deviceID + "/led";
-
+    var url = "https://api.particle.io/v1/devices/" + deviceID + "/feed";
+      
     function feedFish() {
-      $.post(url, { params: "1", access_token: accessToken })
+      $.post(url, { params: "on", access_token: accessToken })
         .done(function(response) {
           if (response.return_value == 1) {
-            // Cambiar la imagen a foco encendido
-            alert("Almentando a los peces");
+            // Se activa servomotor
+            alert("Alimentando a los peces");
           } else if(response.return_value == 0){
             // algo salio mal
             alert("Algo salió mal. Vuelve a intentarlo")
@@ -53,7 +53,6 @@
 <body>
   <h1>feeding time</h1>
   <div class="button-container">
-    <!-- <img id="focoImagen" src="apagado.jpg" alt="Foco apagado">  -->
     <input type="button" class="custom-button" onclick="feedFish()" value="FEED" />
   </div>
 </body>
