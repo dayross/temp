@@ -1,51 +1,60 @@
+<!DOCTYPE html>
 <html>
-
 <head>
-	<script src="https://code.jquery.com/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    /* Estilo para el fondo de la página */
+    body {
+      background-color: #e0f2ff; /* Amarillo claro */
+    }
 
-	<script>
-		var accessToken = "6da2407cd08c7566cb3d6777990c3f45d50e761e";
-		var deviceID = "e00fce6849f0c8bf1892a5a1"
-		var url = "https://api.particle.io/v1/devices/" + deviceID + "/led";
+    /* Estilo para centrar el título */
+    h1 {
+      text-align: center;
+      font-family: 'Arial Round', sans-serif; 
+    }
 
-		function switchOn() {
-	      $.post(url, { params: "off", access_token: accessToken })
-	        .done(function(response) {
-	          if (response.return_value === 1) {
-	            // Cambiar la imagen a foco encendido
-	            alert("Foco encendido");
-	          } else if (response.return_value == 0){
-		    // Cambiar la imagen a foco apagado
-		  alert("Foco apagado");
-		  }
-	        });
-	    }
-	
-	    function switchOff() {
-	      $.post(url, { params: "on", access_token: accessToken })
-	        .done(function(response) {
-	          if (response.return_value === 1) {
-	            // Cambiar la imagen a foco encendido
-	            alert("Foco encendido");
-	          } else if (response.return_value == 0){
-		    // Cambiar la imagen a foco apagado
-		  alert("Foco apagado");
-	          }
-	        });
-	    }
-			
-	     
+    /* Estilo para centrar los botones e imagen */
+    .button-container {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-	</script>
+    /* Estilo para los botones con separación */
+    .custom-button {
+      margin-top: 10px; /* Espacio superior para separación */
+    }
+  </style>
+
+  <script>
+
+    var accessToken = "6da2407cd08c7566cb3d6777990c3f45d50e761e";
+    var deviceID = "e00fce6849f0c8bf1892a5a1";
+    var url = "https://api.particle.io/v1/devices/" + deviceID + "/led";
+
+    function feedFish() {
+      $.post(url, { params: "1", access_token: accessToken })
+        .done(function(response) {
+          if (response.return_value == 1) {
+            // Cambiar la imagen a foco encendido
+            alert("Almentando a los peces");
+          } else if(response.return_value == 0){
+            // algo salio mal
+            alert("Algo salió mal. Vuelve a intentarlo")
+          }
+        });
+    }
+
+  </script>
 </head>
 
 <body>
-
-	<h1>On/Off Control</h1>
-
-	<input type="button" onClick="switchOn()" value="ON" />
-	<input type="button" onClick="switchOff()" value="OFF" />
-
+  <h1>feeding time</h1>
+  <div class="button-container">
+    <!-- <img id="focoImagen" src="apagado.jpg" alt="Foco apagado">  -->
+    <input type="button" class="custom-button" onclick="feedFish()" value="FEED" />
+  </div>
 </body>
-
 </html>
