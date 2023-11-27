@@ -6,26 +6,42 @@
     /* Estilo para el fondo de la página */
     body {
       background-color: #e0f2ff; /* Amarillo claro */
+      background-image: url(fondo.jpg.webp);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: bottom;
     }
 
     /* Estilo para centrar el título */
     h1 {
       text-align: center;
       font-family: 'Arial Round', sans-serif; 
+      padding-top: 40px;
+      font-size: 60px;
     }
 
     /* Estilo para centrar los botones e imagen */
     .button-container {
       text-align: center;
-      display: flex;
-      flex-direction: column;
       align-items: center;
+      padding: 25px;
     }
+
 
     /* Estilo para los botones con separación */
     .custom-button {
-      margin-top: 10px; /* Espacio superior para separación */
+      padding: 15px;
+      font-size: 25px;
+      width: fit-content;
+      height: fit-content;
+      border: none;
+      background-color: rgb(22, 170, 234);
+      color: #EBEAF0;
+
     }
+
+    .custom-button:hover {background-color: rgb(6, 125, 176);}
   </style>
 
   <script>
@@ -39,7 +55,7 @@
         .done(function(response) {
           if (response.return_value == 1) {
             // Se activa servomotor
-            alert("Alimentando a los peces");
+            document.getElementById("pez").style.visibility = "visible";
           } else if(response.return_value == 0){
             // algo salio mal
             alert("Algo salió mal. Vuelve a intentarlo")
@@ -51,9 +67,11 @@
 </head>
 
 <body>
-  <h1>feeding time</h1>
+  <h1>Alimentando a los peces.</h1>
   <div class="button-container">
-    <input type="button" class="custom-button" onclick="feedFish()" value="FEED" />
+    <input type="button" class="custom-button" onclick="feedFish()" value=" Alimentalos " />
+    <br>
+    <img id="pez" src="pezComer.gif" height="400px" style="visibility:hidden;">
   </div>
 </body>
 </html>
