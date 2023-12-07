@@ -1,54 +1,137 @@
 <!DOCTYPE html>
 <html>
+  <meta charset="UTF-8">
 <head>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
-    /* Estilo para el fondo de la página */
-    body {
-      background-color: #e0f2ff; /* Amarillo claro */
-      background-image: url(fondo.jpg.webp);
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-position: bottom;
-    }
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
-    /* Estilo para centrar el título */
-    h1 {
-      text-align: center;
-      font-family: 'Arial Round', sans-serif; 
-      padding-top: 40px;
-      font-size: 60px;
-    }
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body{
+  background: #30451c;
+}
+section{
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section:nth-child(1){
+  color: #d8d09f
+  }
+section:nth-child(2){
+  color: #30451c;
+  background: #d8d09f;
+} 
+section:nth-child(3){
+  color: #fcf9e1;
+}
+section:nth-child(4){
+  color: #30451c;
+  background: #d8d09f;
+}
+section .container{
+  margin: 100px;
+}
+section h1{
+  font-size: 3rem;
+  margin: 20px;
+}
+section h2{
+  font-size: 40px;
+  text-align: center;
+}
+.titulo{
+  font-size: 6rem;
+  margin: 20px;
+  text-align: center;
+}
+section .text-container{
+   display: flex;
+}
+section .text-container .text-box{
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  align-items: center;
+  background: #00c2cb;
+}
+section .text-container .text-box h3{
+  font-size: 30px;
+  text-align: center;
+}
+button{
+  padding: 20px;
+  background: #00c2cb;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 10px;
+  align-items: center;
+  margin:40px;
+  border: none;
+}
+button:hover{
+  background: #01a6af;
+}
+input{
+  background-color: #fdfbf2;
+  width: 5rem;
+  height: 2.5rem;
+  color: #30451c;
+  font-size: 1rem;
+  padding: 5px;
+  text-align: center;
+  align-items: center;
+}
 
-    /* Estilo para centrar los botones e imagen */
-    .button-container {
-      text-align: center;
-      align-items: center;
-      padding: 25px;
-    }
+@media (max-width: 900px){
+  section h1{
+    font-size: 2rem;
+    text-align: center;
+  }
+  section .text-container{
+    flex-direction: column;
+  }
+}
+.envio{
+  background:#00c2cb;
+  color: #30451c;
+  text-align: center;
+  align-items: center;
+  padding: 15px;
+}
 
+.envio:hover{
+  background:#30451c;
+  color: #fdfbf2;
+}
 
-    /* Estilo para los botones con separación */
-    .custom-button {
-      padding: 15px;
-      font-size: 25px;
-      width: fit-content;
-      height: fit-content;
-      border: none;
-      background-color: rgb(22, 170, 234);
-      color: #EBEAF0;
+.reveal{
+  position: relative;
+  transform: translateY(150px);
+  opacity: 0;
+  transition: 1s all ease;
+}
 
-    }
-
-    .custom-button:hover {background-color: rgb(6, 125, 176);}
+.reveal.active{
+  transform: translateY(0);
+  opacity: 1;
+}
   </style>
 
   <script>
 
     var accessToken = "6da2407cd08c7566cb3d6777990c3f45d50e761e";
     var deviceID = "e00fce6849f0c8bf1892a5a1";
-    var url = "https://api.particle.io/v1/devices/" + deviceID + "/feed";
+    var urlTam = "https://api.particle.io/v1/devices/" + deviceID + "/setTam";
+    var urlFrec = "https://api.particle.io/v1/devices/" + deviceID + "/setFrec";
+    var urlHora = "https://api.particle.io/v1/devices/" + deviceID + "/setHora";
+    var urlMinuto = "https://api.particle.io/v1/devices/" + deviceID + "/setMin";
       
     function feedFish() {
       $.post(url, { params: "on", access_token: accessToken })
@@ -63,15 +146,97 @@
         });
     }
 
+    // funcion para mandar el tamaño de la planta
+    function setTam(tamano){
+      $.post(urlTam, {params: tamano, access_token: accessToken })
+      .done(function(response) {
+          if (response.return_value == -1) {
+            alert("Algo salió mal. Vuelve a intentarlo")
+          }
+        });
+    }
+
+    // funcion para mandar la frecuencia de riego de la planta
+    function setFrec(frecuencia){
+      $.post(urlFrec, {params: frecuencia, access_token: accessToken })
+      .done(function(response) {
+          if (response.return_value == -1) {
+            alert("Algo salió mal. Vuelve a intentarlo")
+          }
+        });
+    }
+
+    function setHoraMin(){
+      $.post(urlHora, {params: document.getElementById("hora").value, access_token: accessToken });
+      $.post(urlMinuto, {params: document.getElementById("minuto").value, access_token: accessToken });
+    }
+
+	function reveal() {
+  var reveals = document.querySelectorAll(".reveal");
+
+  for (var i = 0; i < reveals.length; i++) {
+    var windowHeight = window.innerHeight;
+    var elementTop = reveals[i].getBoundingClientRect().top;
+    var elementVisible = 150;
+
+    if (elementTop < windowHeight - elementVisible) {
+      reveals[i].classList.add("active");
+    } else {
+      reveals[i].classList.remove("active");
+    }
+  }
+}
+
+window.addEventListener("scroll", reveal);
+
   </script>
 </head>
 
 <body>
-  <h1>Alimentando a los peces.</h1>
-  <div class="button-container">
-    <input type="button" class="custom-button" onclick="feedFish()" value=" Alimentalos " />
-    <br>
-    <img id="pez" src="pezComer.gif" height="400px" style="visibility:hidden;">
+  <section>
+  <h1>
+	<p style="text-align: center;">Bienvenido a </p>
+	<p class="titulo">EcoRiegoPro </p>
+  <p style="font-size: 1.5rem; text-align: center;"> por Diana y Omar</p>
+  </h1>
+  
+</section>
+<section>
+  <div class="container reveal">
+    <h2>Escoge el tamaño de tu planta.</h2>
+        <button type="button" id="c" onclick="setTam('c')">Chica</button>
+        <button type="button" id="m" onclick="setTam('m')">Mediana</button>
+        <button type="button" id="g" onclick="setTam('g')">Grande</button>
   </div>
+</section>
+
+<section>
+  <div class="container reveal">
+    <h2>¿Con qué frecuencia riegas tus plantas?</h2>
+        <button type="button" id="1" onclick="setFrec('1')">Constantemente</button>
+        <button type="button" id="2" onclick="setFrec('2')">A menudo</button>
+        <button type="button" id="3" onclick="setFrec('3')">Esporadicamente</button>
+  </div>
+</section>
+
+<section>
+  <div class="container reveal">
+    <h2>Escoge la hora para el riego.</h2>
+    <div class="text-container">
+      <div class="text-box">
+        <form onsubmit="setHoraMin()">
+          <h3>Hora</h3>
+            <input id="hora" name="hora" type="number" pattern="[0-9]*" value="1" min="1" max="23" step="1" /> 
+          <h3>Minuto</h3>
+              <input id="minuto" name="minuto" type="number" pattern="[0-9]*" value="1" min="1" max="59" step="1" />
+        </form>
+      </div>
+    </div>
+    <br>
+    <div class="text-box" style="align-items: center; text-align: center;;">
+      <button class="envio" onclick="setHoraMin()"> Finalizar </button>
+    </div>
+  </div>
+</section>
 </body>
 </html>
