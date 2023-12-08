@@ -132,19 +132,6 @@ input{
     var urlFrec = "https://api.particle.io/v1/devices/" + deviceID + "/setFrec";
     var urlHora = "https://api.particle.io/v1/devices/" + deviceID + "/setHora";
     var urlMinuto = "https://api.particle.io/v1/devices/" + deviceID + "/setMin";
-      
-    function feedFish() {
-      $.post(url, { params: "on", access_token: accessToken })
-        .done(function(response) {
-          if (response.return_value == 1) {
-            // Se activa servomotor
-            document.getElementById("pez").style.visibility = "visible";
-          } else if(response.return_value == 0){
-            // algo salio mal
-            alert("Algo salió mal. Vuelve a intentarlo")
-          }
-        });
-    }
 
     // funcion para mandar el tamaño de la planta
     function setTam(tamano){
